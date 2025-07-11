@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function () {
-    $posts = Post::all();
+    $posts = Post::with(['user', 'category'])->latest()->get();
     return view('posts', ['title' => 'Blog Page', 'posts' => $posts]);
 });
 
@@ -21,11 +21,16 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 });
 
 Route::get('/categories/{category:slug}', function (Category $category) {
-    return view('posts', ['title' => 'Kategori: '. $category->name, 'posts' => $category->posts]);
+    $posts = $category->posts->load('category', 'user');
+
+    return view('posts', ['title' => 'Kategori: '. $category->name, 'posts' => $posts]);
 });
 
 Route::get('/authors/{user:username}', function (User $user) {
-    return view('posts', ['title' => 'Articles by '. $user->name, 'posts' => $user->posts]);
+    $posts = $user->posts->load('category', 'user');
+
+    return view('posts', ['title' => 'Articles by '.
+    $user->name, 'posts' => $posts]);
 });
 
 Route::get('/contact', function () {
