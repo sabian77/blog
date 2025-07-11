@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Dashboard Page']);
@@ -12,11 +13,15 @@ Route::get('/posts', function () {
     return view('posts', ['title' => 'Blog Page', 'posts' => $posts]);
 });
 
+//membuat ketika diklik maka akan diarahkan ke halaman post dengan route model binding
 Route::get('/posts/{post:slug}', function (Post $post) {
 
     return view('post', ['title' => 'Single post', 'post' => $post]);
 });
 
+Route::get('/authors/{user}', function (User $user) {
+    return view('posts', ['title' => 'Articles by ' . $user->name, 'posts' => $user->posts]);
+});
 
 
 Route::get('/contact', function () {
