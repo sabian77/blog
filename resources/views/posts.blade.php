@@ -5,8 +5,11 @@
             <a href="/posts/{{ $post['slug'] }}" class="hover:underline">
                 <h2 class="mb-1 text-2xl tracking-tight font-bold text-gray-900">{{ $post['title'] }}</h2>
             </a>
-        <div class="text-base text-gray-500">
-            <a href="/authors/{{ $post->user->id }}" class="hover:underline">{{ $post->user->name }}</a> | 10 Juli 2025
+        <div class="text-base ">
+            Created by <a href="/authors/{{ $post->user->username }}" class="hover:underline text-gray-500">{{ $post->user->name }}</a>
+            in <a href="/categories/{{ $post->category->slug }}"
+                 class="hover:underline text-gray-500">{{ $post->category->name }}</a>
+             | 10 Juli 2025
         </div>
         <p class="my-5 font-light">{{ Str::limit($post['body'],110) }}</p>
 
