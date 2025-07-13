@@ -45,8 +45,10 @@
         </div>
     </div>
     </form>
-      <div class="grid gap-8 lg:grid-cols-3 md:grid-cols-2 ">
-        @foreach ( $posts as $post )
+        {{ $posts->links() }}
+    
+      <div class="mt-4 grid gap-8 lg:grid-cols-3 md:grid-cols-2 ">
+        @forelse ( $posts as $post )
           <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
               <div class="flex justify-between items-center mb-5 text-gray-500">
                 <a href="/posts?category={{ $post->category->slug }}"> 
@@ -82,8 +84,20 @@
                   </a>
               </div>
           </article> 
-        @endforeach
-      </div>  
+        @empty
+            <div class="col-span-full flex flex-col items-center justify-center my-20">
+                <p class="font-bold text-2xl mb-4 text-center">
+                    Yang anda cari tidak ditemukan
+                </p>
+                <a href="/posts" class="text-blue-600 hover:underline">
+                    &laquo; Kembali ke all post
+                </a>
+            </div>
+        @endforelse
+
+        
+
   </div>
+
 
 </x-layout>
